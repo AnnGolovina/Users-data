@@ -54,6 +54,27 @@ main button{
 	background-color: #085151;
 	cursor: pointer;
 }
+
+.change-place{
+	display: flex;
+	justify-content: start;
+	align-items: end;
+}
+
+#sort-by-name, #sort-by-age{
+	height: 20px;
+	width: 20px;
+	border: 1px solid #085151;
+}
+
+label{
+	font-family: 'Acme', sans-serif;
+    font-family: 'Josefin Sans', sans-serif;
+	font-size: 18px;
+	color: #063c3c;
+	
+}
+
 section{
 	font-family: 'Acme', sans-serif;
     font-family: 'Josefin Sans', sans-serif;

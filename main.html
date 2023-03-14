@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css2?family=Acme&family=Rampart+One&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Acme&family=Josefin+Sans&family=Rampart+One&display=swap" rel="stylesheet">
+	
 	<title>Users</title>
 	<link rel="stylesheet" href="main.css">
 </head>
@@ -13,11 +14,25 @@
 	<div class="wrapper">
 	<h1>Users data</h1>
 	<main>
+		<div class="-info-input">
 		<input type="text" id="name" placeholder="User's name" >
 		<input type="text" id="age" placeholder="User's age" >
 		<input type="text" id="city" placeholder="User's city" >
 		<button id="create" >Create User</button>
+		</div>
+		<div class="change-place">
+		<input type="text" id="search" placeholder="Search users" />
+		<label for=""> <input type="checkbox" id="sort-by-name"/>
+			<span>Sort by name</span>
+		</label>
+		<label for=""> <input type="checkbox" id="sort-by-age"/>
+			<span>Sort by age</span>
+		</label>
+		</div>
+		<!--<button id="search-button">Search</button>
+		<button id="cancel-search-button">Cancel</button>-->
 		<section id="users-section" ></section>
+
 	</main>
 	</div>
 
