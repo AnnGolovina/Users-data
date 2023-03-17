@@ -9,29 +9,42 @@ const sortingByAgeCheckbox = document.querySelector("#sort-by-age");
 const paginationSection = document.querySelector("#pagination");
 
 let users = [
-  { name: "Lisa", age: 27, city: "Kyiv" },
-  { name: "Ann", age: 30, city: "Odessa" },
-  { name: "John", age: 22, city: "Poltava" },
-  { name: "Olena", age: 25, city: "Mariupol" },
-  { name: "Bob", age: 35, city: "Lviv" },
-  { name: "John", age: 22, city: "Poltava" },
-  { name: "Rory", age: 28, city: "Dublin" },
-  { name: "Ann", age: 30, city: "Odessa" },
-  { name: "John", age: 22, city: "Poltava" },
-];
+  { id: generateId(), name: "Lisa", age: 27, city: "Kyiv" },
+  { id: generateId(), name: "Ann", age: 30, city: "Odessa" },
+  { id: generateId(), name: "John", age: 22, city: "Poltava" },
+  { id: generateId(), name: "Olena", age: 25, city: "Mariupol" },
+  { id: generateId(), name: "Bob", age: 35, city: "Lviv" },
+  { id: generateId(), name: "John", age: 22, city: "Poltava" },
+  { id: generateId(), name: "Rory", age: 28, city: "Dublin" },
+  { id: generateId(), name: "Ann", age: 30, city: "Odessa" },
+  { id: generateId(), name: "John", age: 22, city: "Poltava" },
+]
+
+function generateId (length = 10) {
+  let id = "";
+  const symbols = "0123456789zxcvbnmlkjhgfdsaqwertyuiop";
+
+  for(let i = 0; i < length; i++) {
+    id += symbols[Math.floor(Math.random() * symbols.length)]
+  }
+return id;
+}
 
 let changingUser = undefined;
 let paginationpageNumber = 0;
 
 renderUsers();
 
-const deleteUser = (indexOfUser) => {
-  users = users.filter((el, i) => i !== indexOfUser);
+const deleteUser = (userId) => {
+  users = users.filter((user) => user.id !== userId);
   renderUsers();
 };
 
-const editUser = (indexOfUser) => {
-  changingUser = {data: users[indexOfUser], index: indexOfUser};
+const editUser = (userId) => {
+  const userToEdit = users.find((user) => user.id === userId);
+  const indexOfEditingUser = users.findIndex((user) => user.id === userId) 
+
+  changingUser = {data: userToEdit, index: indexOfEditingUser};
 
   createButton.textContent = "Save changes";
 
@@ -75,11 +88,11 @@ function renderUsers(usersToRender = groupElementsOfArray(users, 3)[paginationpa
 
   const usersContent = usersToRender.map(
     (user) => `<div class="user-card">
-        <p>${user.name}</p>
-        <p>${user.city}</p>
+        <p>${user.name}</p>      
         <span>${user.age}</span>
-        <button class="delete-user-button">Delete</button>
-        <button class="edit-user-button">Edit</button>
+        <p>${user.city}</p>
+        <button class="delete-user-button" id="${user.id}">Delete</button>
+        <button class="edit-user-button" id="${user.id}">Edit</button>
     </div>`
   );
 
@@ -89,14 +102,14 @@ function renderUsers(usersToRender = groupElementsOfArray(users, 3)[paginationpa
 
   const deleteButtons = [...document.querySelectorAll(".delete-user-button")];
 
-  deleteButtons.forEach((button, i) => {
-    button.onclick = () => deleteUser(i);
+  deleteButtons.forEach((button) => {
+    button.onclick = () => deleteUser(button.id);
   });
 
   const editButtons = [...document.querySelectorAll(".edit-user-button")];
 
-  editButtons.forEach((button, i) => {
-    button.onclick = () => editUser(i);
+  editButtons.forEach((button) => {
+    button.onclick = () => editUser(button.id);
   });
 }
 
@@ -112,6 +125,7 @@ createButton.onclick = () => {
   if (changingUser) {
    
     users[changingUser.index] = {
+        ...users[changingUser.index],
         name: name,
         age: age,
         city: city
@@ -120,7 +134,7 @@ createButton.onclick = () => {
     changingUser = undefined;
     createButton.textContent = "Create User";
   } else {
-    const user = { name: name, age: age, city: city };
+    const user = { id: generateId(), name: name, age: age, city: city };
 
     users.push(user);
   }
@@ -150,7 +164,7 @@ sortingByNameCheckbox.onchange = (event) => {
         sorting.names();
         sortingByAgeCheckbox.checked = false;
     } else {
-        renderUsers(users);
+        renderUsers();
     }
 }
 
@@ -159,7 +173,7 @@ sortingByAgeCheckbox.onchange = (event) => {
       sorting.ages();
       sortingByNameCheckbox.checked = false;
   } else {
-      renderUsers(users);
+      renderUsers();
   }
 }
 
